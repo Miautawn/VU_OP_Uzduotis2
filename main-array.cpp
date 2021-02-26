@@ -215,4 +215,8 @@ int main() {
     }
   }
 
+  //isvalomas masyvas
+  for(int i = 0; i<array_size; i++) delete [] students[i].grades;
+  delete [] students;
+
 }
