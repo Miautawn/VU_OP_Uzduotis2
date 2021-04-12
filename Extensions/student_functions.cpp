@@ -114,11 +114,18 @@ void student_benchmark(Container bench_students, string container_code,  string 
     <<m_timer.split_time(full_time)<<endl;
 
     //2) pirmo >= 5 radimas
-    typename Container::iterator first_good_student = 
-    std::lower_bound(bench_students.begin(), bench_students.end(), 5,
+    typename Container::iterator first_good_student;
+    if(container_code == "VECTOR") {
+      first_good_student = std::find_if(bench_students.begin(), bench_students.end(), 
+      [](const Student student) {
+        return student.final_score_mean >= 5;});
+
+    }else {
+      first_good_student = std::lower_bound(bench_students.begin(), bench_students.end(), 5,
       [](const Student &l_student, const int value) {
-        return l_student.final_score_mean < value;
-      });
+      return l_student.final_score_mean < value;});
+    }
+    
     
 
     //3) kietaku ir varguoliu į skirtingus konteinerius paskirstymas
@@ -127,8 +134,18 @@ void student_benchmark(Container bench_students, string container_code,  string 
     Container *kietuoliai = &temp_kietuoliai;
     Container *varguoliai = &temp_varguoliai;
     if(split_mode == "COPY") {
-      temp_kietuoliai = {first_good_student, bench_students.end()};
-      temp_varguoliai = {bench_students.begin(), first_good_student};
+      if(container_code == "VECTOR") {
+        int varguoliai_size = std::distance(bench_students.begin(), first_good_student);
+        int kietuoliai_size = stages[stage_index] - varguoliai_size;
+        temp_kietuoliai.resize(kietuoliai_size);
+        temp_varguoliai.resize(varguoliai_size);
+        std::copy(bench_students.begin(), first_good_student, temp_varguoliai.begin());
+        std::copy(first_good_student, bench_students.end(), temp_kietuoliai.begin());
+      }else {
+        temp_kietuoliai = {first_good_student, bench_students.end()};
+        temp_varguoliai = {bench_students.begin(), first_good_student};
+      }
+      
     } else {
       temp_kietuoliai = {first_good_student, bench_students.end()};
       bench_students.erase(first_good_student, bench_students.end());
