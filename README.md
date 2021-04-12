@@ -37,6 +37,7 @@ Dabar galima atlikti testą su vienu iš trijų duomenų konteinerių: [`vector`
 
 * [v1.0](https://github.com/Miautawn/VU_OP_Uzduotis2/releases/tag/v1.0) - Ši versija leidžia pasirinkti rūšiavimo metodiką darant 'benchmark' funkciją [`COPY`, `REMOVE`].  
 Programos spartos tyrimus priklausomai nuo pasirinkto metodo galima rasti [čia](#sort-chart).
+* [v1.0-vector](https://github.com/Miautawn/VU_OP_Uzduotis2/releases/tag/v1.0-vector) - Ši versija yra identiška [v1.0](https://github.com/Miautawn/VU_OP_Uzduotis2/releases/tag/v1.0) tačiau `vector` klasė naudoja `std::find_if()` ir `std::copy()` funkcijas.  
 
 
 ## <a name="speed-chart"></a>Spartos tyrimas
